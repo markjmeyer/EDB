@@ -1,14 +1,14 @@
-################### Everyday Bayes Script ###################
-#	A brief tutorial on Bayesian statistics	first			#
-#			given at Northern Arizona University on			#
-#			September 28, 2018								#
-#															#
-#	Created: 	9/15/2018									#
-#	Modified:	9/23/2018									#
-#															#
-#	By:			MJ Meyer									#
-#															#
-#############################################################
+##################### Everyday Bayes Script #####################
+#	A brief tutorial on Bayesian statistics	first		
+#			given at Northern Arizona University on
+#			September 28, 2018			
+#							
+#	Created: 	9/15/2018				
+#	Modified:	9/23/2018				
+#							
+#	By:			MJ Meyer		
+#							
+#################################################################
 
 ### install libraries ###
 # ONLY NEED TO INSTALL ONCE # 
@@ -32,12 +32,12 @@ library(mvtnorm)
 
 # original data #
 ?graft.vs.host
-X			<- with(graft.vs.host, sum(gvhd))		# number of successes
-N			<- with(graft.vs.host, length(gvhd))		# number of trials
-B			<- 20000								# number of posterior samples
+X			<- with(graft.vs.host, sum(gvhd))	# number of successes
+N			<- with(graft.vs.host, length(gvhd))	# number of trials
+B			<- 20000				# number of posterior samples
 
 postSamp	<- rbeta(B, X + 1, N - X + 1)	# we add 1 to X and N - X to fully determine
-											#	the posterior distribution
+						#	the posterior distribution
 
 # summaries #
 quantile(postSamp, probs = c(0.5, 0.025, 0.975))	# posterior median and credible intervals
@@ -58,11 +58,11 @@ colnames(thetaMat)	<- 'Posterior Distribution of Proportion with GVHD'
 denplot(thetaMat, lwd = 3, ci = 0.95)
 
 # using original data for prior on "new" data #
-X			<- 83									# number of successes from new study
+X			<- 83						# number of successes from new study
 X0			<- with(graft.vs.host, sum(gvhd))		# number of successes from prior study
-N			<- 200									# number of trials from new study
+N			<- 200						# number of trials from new study
 N0			<- with(graft.vs.host, length(gvhd))		# number of trials from prior study
-B			<- 20000								# number of posterior samples
+B			<- 20000					# number of posterior samples
 
 infoPost	<- rbeta(B, X + X0 + 1, (N + N0) - (X + X0) + 1)
 
@@ -87,12 +87,12 @@ denplot(thetaMat, lwd = 3, xlim = c(0.1, 0.8))
 
 ?sleep # data description
 X	<- with(sleep, extra[group == 1] - extra[group == 2]) 	# differences for paired, for
-															# 	t, use the vector of data
-B	<- 40000												# number of posterior samples
+								# 	t, use the vector of data
+B	<- 40000						# number of posterior samples
 
-burnin	<- B/2												# typically drop first half of
-															#	samples when using Gibbs
-N		<- length(X)										# sample size
+burnin	<- B/2							# typically drop first half of
+								#	samples when using Gibbs
+N		<- length(X)					# sample size
 
 mu		<- vector('numeric', length = B)	# an empty vector to store mu
 sigma	<- vector('numeric', length = B)	# an empty vector to store sigma
@@ -140,11 +140,11 @@ denplot(postMat, lwd = 3)
 ?CO2
 X1	<- with(CO2, uptake[Treatment == 'nonchilled'])		# data for group 1
 X2	<- with(CO2, uptake[Treatment == 'chilled'])		# data for group 2
-B	<- 40000											# number of posterior samples
+B	<- 40000						# number of posterior samples
 
 burnin	<- B/2
-N1		<- length(X1)									# number of subjects in group 1
-N2		<- length(X2)									# number of subjects in group 2
+N1		<- length(X1)					# number of subjects in group 1
+N2		<- length(X2)					# number of subjects in group 2
 
 mun		<- vector('numeric', length = B)
 sigman	<- vector('numeric', length = B)
@@ -200,12 +200,12 @@ N1			<- 411		# number of trails in group 1
 X2			<- 253		# number of successes in group 2
 N2			<- 410		# number of trials in group 2
 
-B			<- 20000								# number of posterior samples
+B			<- 20000		# number of posterior samples
 
 theta1	<- rbeta(B, X1 + 1, N1 - X1 + 1)	# we add 1 to X and N - X to fully determine
-											#	the posterior distribution
+						#	the posterior distribution
 theta2	<- rbeta(B, X2 + 1, N2 - X2 + 1)	# we add 1 to X and N - X to fully determine
-											#	the posterior distribution
+						#	the posterior distribution
 
 quantile(theta1, probs = c(0.5, 0.025, 0.975))
 quantile(theta2, probs = c(0.5, 0.025, 0.975))
@@ -223,8 +223,8 @@ denplot(diffMat, lwd = 3)
 
 ### Regression Equivalent ###
 ?longley
-X	<- model.matrix(~ GNP + Armed.Forces + Population, data = longley)
-Y	<- with(longley, Employed)
+X	<- model.matrix(~ GNP + Armed.Forces + Population, data = longley)	# Design matrix, contains X variables
+Y	<- with(longley, Employed)						# Outcome, Y
 B	<- 40000
 
 burnin	<- B/2
